@@ -21,7 +21,7 @@ jobs:
           severity: "CRITICAL,HIGH,MEDIUM"
           format: "sarif"
           output: "trivy-iac-results.sarif"
-          exit-code: "0"
+          exit-code: "1"
 
       - name: Upload SARIF report
         uses: actions/upload-artifact@v4
