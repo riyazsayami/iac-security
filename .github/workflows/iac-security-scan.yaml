@@ -2,6 +2,19 @@ name: Trivy IaC Scan (CloudFormation)
 
 on:
   workflow_dispatch:
+    inputs:
+      severity:
+        description: "Choose Severity Level"
+        required: true
+        default: "CRITICAL,HIGH,MEDIUM"
+        type: choice
+        options:
+          - CRITICAL
+          - HIGH
+          - MEDIUM
+          - "CRITICAL,HIGH"
+          - "MEDIUM, HIGH"
+          - "CRITICAL, MEDIUM"
   push:
     branches: [ "main" ]
 
@@ -18,7 +31,7 @@ jobs:
         with:
           scan-type: "config"
           scan-ref: "."
-          severity: "CRITICAL,HIGH,MEDIUM"
+          severity: ${{ inputs.severity }}
           format: "table"
           exit-code: "0"
 
