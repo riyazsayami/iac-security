@@ -13,12 +13,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run Trivy IaC scan
+      - name: Run Trivy IaC scan (SARIF)
         uses: aquasecurity/trivy-action@0.20.0
         with:
           scan-type: "config"
           scan-ref: "."
           severity: "CRITICAL,HIGH,MEDIUM"
-          format: "table"
+          format: "sarif"
+          output: "trivy-iac-results.sarif"
           exit-code: "0"
 
+      - name: Upload SARIF report
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-iac-sarif-report
+          path: trivy-iac-results.sarif
